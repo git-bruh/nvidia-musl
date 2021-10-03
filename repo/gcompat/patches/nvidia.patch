@@ -1,0 +1,58 @@
+diff --git a/Makefile b/Makefile
+index cbb7634..a7a1259 100644
+--- a/Makefile
++++ b/Makefile
+@@ -26,6 +26,7 @@ LIBGCOMPAT_SRC = \
+ 	libgcompat/signal.c		\
+ 	libgcompat/socket.c		\
+ 	libgcompat/stdio.c		\
++	libgcompat/stdfiles.c   \
+ 	libgcompat/stdlib.c		\
+ 	libgcompat/string.c		\
+ 	libgcompat/sysctl.c		\
+diff --git a/libgcompat/dlfcn.c b/libgcompat/dlfcn.c
+index f2eaa45..3cc9e64 100644
+--- a/libgcompat/dlfcn.c
++++ b/libgcompat/dlfcn.c
+@@ -3,6 +3,11 @@
+ #include <stdio.h>  /* fprintf */
+ #include <stdlib.h> /* getenv */
+ 
++enum {
++	RTLD_DL_SYMENT = 1,
++	RTLD_DL_LINKMAP = 2
++};
++
+ void *dlmopen(long lmid, const char *pathname, int mode)
+ {
+ 	if (getenv("GLIBC_FAKE_DEBUG") != NULL) {
+@@ -23,3 +28,20 @@ void *dlvsym(void *handle, char *symbol, char *version)
+ 
+ 	return dlsym(handle, symbol);
+ }
++
++int dladdr1(const void *addr, Dl_info *info, void **extra_info, int flags) {
++	if (getenv("GLIBC_FAKE_DEBUG") != NULL) {
++		fprintf(stderr, "dladdr1 flags %d\n", flags);
++	}
++
++	switch(flags) {
++		default:
++		case 0:
++			return dladdr(addr, info);
++		case RTLD_DL_SYMENT:
++		case RTLD_DL_LINKMAP:
++			break;
++	}
++
++	return 0;
++}
+diff --git a/libgcompat/stdfiles.c b/libgcompat/stdfiles.c
+new file mode 100644
+index 0000000..1948931
+--- /dev/null
++++ b/libgcompat/stdfiles.c
+@@ -0,0 +1,3 @@
++#include <stddef.h>
++
++void *_IO_2_1_stdout_ = NULL;
