@@ -1,7 +1,6 @@
 #!/bin/sh
 
 /usr/bin/depmod
-/usr/bin/ldconfig
 
 cat <<EOF
 

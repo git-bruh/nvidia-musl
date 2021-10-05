@@ -8,6 +8,8 @@ Some hacks to run proprietary NVIDIA drivers on a pure musl system.
 
 * All the driver libraries like `libnvidia-eglcore.so` have to be explicitly "linked" against gcompat with `patchelf` to avoid `LD_PRELOAD`-ing gcompat (`patchelf --add-needed libgcompat.so.0 libnvidia-xyz.so`).
 
+* X11 will not work (Neither will anything that needs `libnvidia-tls.so`) and no NVIDIA-specific X11 libs should be installed (See the `nvidia` package).
+
 * The `repo/` directory is a KISS repository that contains packages containing the above hacks.
 
 It should be obvious but don't report driver related bugs to anyone if you're running such a setup.

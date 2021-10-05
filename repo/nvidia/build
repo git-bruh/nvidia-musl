@@ -16,9 +16,8 @@ smi persistenced modprobe
 "
 
 libs="
-libEGL_nvidia     libGLESv1_CM_nvidia libGLESv2_nvidia libnvidia-glcore
-libnvidia-eglcore libnvidia-glsi      libnvidia-cfg    libnvidia-ml
-libnvidia-ngx     libnvidia-glvkspirv libnvidia-tls
+libEGL_nvidia     libGLESv1_CM_nvidia libGLESv2_nvidia
+libnvidia-eglcore libnvidia-glsi      libnvidia-ml
 "
 
 for bin in $bins; do
