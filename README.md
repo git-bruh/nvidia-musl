@@ -6,7 +6,7 @@ Some hacks to run proprietary NVIDIA drivers on a pure musl system.
 
 * `libglvnd` is required by the drivers so we build mesa with glvnd support and build `libglvnd` itself without support for `tls` (`-Dtls=disabled`) to prevent the `initial-exec TLS resolves to dynamic definition in ...` error.
 
-* All the driver libraries like `libnvidia-glcore.so` have to be explicitly "linked" against gcompat with `patchelf` to avoid `LD_PRELOAD`-ing gcompat (`patchelf --add-needed libgcompat.so.0 libnvidia-xyz.so`).
+* All the driver libraries like `libnvidia-eglcore.so` have to be explicitly "linked" against gcompat with `patchelf` to avoid `LD_PRELOAD`-ing gcompat (`patchelf --add-needed libgcompat.so.0 libnvidia-xyz.so`).
 
 * The `repo/` directory is a KISS repository that contains packages containing the above hacks.
 
