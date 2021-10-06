@@ -1,5 +1,7 @@
 # nvidia-musl
 
+**NOTE:** This was just a small experiment to see if I could get NVIDIA drivers working on musl, real usage is _NOT_ advised and there could be possibilities of undefined behaviour due to the inherent hackiness of all this.
+
 Some hacks to run proprietary NVIDIA drivers on a pure musl system.
 
 * Only two symbols required by the drivers are missing from gcompat so we [patch them in](https://github.com/git-bruh/nvidia-musl/blob/master/repo/gcompat/patches/nvidia.patch). The `_IO_2_1_stdout_` symbol is just a NULL stub so if the driver tries to actually make use of it, it will crash but it doesn't seem to use it at all in my experience so this will do for now.
