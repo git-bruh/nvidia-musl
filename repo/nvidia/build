@@ -34,8 +34,11 @@ patchelf --add-needed libgcompat.so.0 "$1/usr/lib/"*".so.$2"
 chmod 4755 "$1/usr/bin/nvidia-modprobe"
 
 cp 10_nvidia.json     "$1/usr/share/glvnd/egl_vendor.d/"
-cp nvidia_icd.json    "$1/usr/share/vulkan/icd.d/"
-cp nvidia_layers.json "$1/usr/share/vulkan/implicit_layer.d/"
+
+sed 's|libGLX_nvidia.so.0|libEGL_nvidia.so.0|' nvidia_icd.json \
+    > "$1/usr/share/vulkan/icd.d/nvidia_icd.json"
+sed 's|libGLX_nvidia.so.0|libEGL_nvidia.so.0|' nvidia_layers.json \
+    > "$1/usr/share/vulkan/implicit_layer.d/nvidia_layers.json"
 
 # soname links
 for lib in "$1/usr/lib/"*.so*; do
